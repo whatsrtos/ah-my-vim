@@ -1,0 +1,43 @@
+" _vimrc_menu start {
+
+" Menu Creator {
+function! s:create_menu(sub, target, mode)
+    if a:mode =~ 'n'
+        exec 'nmenu ' . a:sub . ' ' . a:target
+    endif
+    if a:mode =~ 'v'
+        exec 'vmenu ' . a:sub . ' ' . a:target
+    endif
+    if a:mode =~ 'i'
+        exec 'imenu ' . a:sub . ' ' . a:target
+    endif
+endfunction
+
+if has('gui_running')
+    " cscope {
+    call s:create_menu('Plugin.cscope.find\ symbols<Tab>:s', ':cs find s <C-R>=expand("<cword>")<CR><CR>', 'ivn')
+    call s:create_menu('Plugin.cscope.find\ definition<Tab>:g', ':cs find g <C-R>=expand("<cword>")<CR><CR>', 'ivn')
+    call s:create_menu('Plugin.cscope.find\ definition<Tab>:d', ':cs find d <C-R>=expand("<cword>")<CR><CR>', 'ivn')
+    call s:create_menu('Plugin.cscope.find\ calls<Tab>:c', ':cs find c <C-R>=expand("<cword>")<CR><CR>', 'ivn')
+    call s:create_menu('Plugin.cscope.find\ called<Tab>:d', ':cs find d <C-R>=expand("<cword>")<CR><CR>', 'ivn')
+    call s:create_menu('Plugin.cscope.find\ text<Tab>:t', ':cs find t <C-R>=expand("<cword>")<CR><CR>', 'ivn')
+    " }
+    " vdebug {
+    call s:create_menu('&Vdebug.Start\ \|\ Continue\ F5', ':python debugger.run()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Close\ Debug\ Interface\ F6', ':python debugger.close()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Detach\ Session\ F7', ':python debugger.detach()<CR>', 'vn')
+    nmenu &Vdebug.-Sep1- :
+    call s:create_menu('&Vdebug.Step\ Over\ F2', ':python debugger.step_over()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Step\ Into\ F3', ':python debugger.step_into()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Step\ Out\ F4', ':python debugger.step_out()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Run\ to\ Cursor\ F9', ':python debugger.run_to_cursor()<CR>', 'vn')
+    nmenu &Vdebug.-Sep2- :
+    call s:create_menu('&Vdebug.Set\ Breakpoint\ F10', ':python debugger.set_breakpoint()<CR>', 'vn')
+    nmenu &Vdebug.-Sep3- :
+    call s:create_menu('&Vdebug.Get\ Context\ F11', ':python debugger.get_context()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Eval\ Cursor\ F12', ':python debugger.eval_under_cursor()<CR>', 'vn')
+    call s:create_menu('&Vdebug.Eval\ Visual\ Expr\ \\e', ':python debugger.handle_visual_eval()<CR>', 'v')
+    call s:create_menu('&Vdebug.Eval\ Input\ Expr\ ',   ':VdebugEval ', 'vn')
+    " }
+endif
+" end
